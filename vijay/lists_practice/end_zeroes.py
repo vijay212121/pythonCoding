@@ -1,3 +1,4 @@
+'''
 def zeroes_sort_end(lst):
     even_list = []
     odd_list = []
@@ -16,5 +17,21 @@ def zeroes_sort_end(lst):
 lst_ = [1,2,0,4,0,3,5,0,7]
 final_list = []
 print(zeroes_sort_end(lst_))
+'''
+
+lst=[1,0,2,4,0,5,0,9,0,7,0,6]
+k=0
+for i in range(len(lst)):
+    if lst[i]!=0:
+        lst[k]=lst[i]
+        k+=1
+
+for i in range(k,len(lst)):
+    lst[i]=0
+
+print(lst)
+
+
+
 
 
