@@ -1,0 +1,80 @@
+Manager Round Questions:
+
+🔹self Introduction:
+Good morning/afternoon!
+
+Thank you for this opportunity to introduce myself.
+
+My name is Vijay Kumar, and I have 3.6 years of experience as an automation tester at Infosys. I started my career with Infosys, where I have been part of the British Petroleum project, which is related to oil and resource energy domain
+
+In this project my role involves in developing backend automation test scripts using Python to test AWS-based applications. In addition to this, I am also involved in performing API testing with Postman and validating database interactions using MySQL. My role also involves in identifying and reporting the bugs, working closely with developers, and refining both automated and manual test cases as applications evolve.
+
+My project uses BDD frameworks for baxkend automation and hybrid framework for frontend automation, this helped me develop expertise in designing test scenarios to validate application behavior.
+
+One of my key contributions has been enhancing automation scripts, which significantly improved test coverage and reduced manual testing effort. This experience has honed my problem-solving skills, attention to detail, and ability to work effectively in agile environments.
+
+I am excited to contribute my skills and experience to your team and help achieve its goals. Thank you for your time, and I look forward to our discussion
+
+*****************************************************************************************************************************************************
+
+🔹explain about your project??
+
+I worked on the CrossDock application for BP, the main purpose of this application is to help local retail stores collectively place bulk orders in order to receive discounts from suppliers. BP aggregates product requirements from multiple stores, places a large order to the supplier, receives a bulk discount, then segregates products and delivers back to the stores respectively.
+
+coming to my roles and responsibilities
+In this project my role involves in developing backend automation test scripts using Python to test AWS-based applications. In addition to this, I am also involved in performing API testing with Postman, UI testing using java selenium and validating database interactions using MySQL. My role also involves in identifying and reporting the bugs, working closely with developers, and refining both automated and manual test cases as applications evolve.
+
+coming to technology stack
+we use AWS components for appliaction developments, coming to testing we use python for backend, java selenium for front end, postman for API, and Azure devops for project management
+
+coming to team structure
+we are team of 10 members which includes 5 developers, 3 testers, one scrum master and BA. and we follow agile methodology, where we use to attend daily standups, sprint planning, sprint review and sprint retrospectives, i use to attend all these events actively.
+
+
+coming to testing process and framework
+We’ve built a customized framework where feature files follow Gherkin syntax to write test cases in given,when,then steps and also we use tags to ctegorize and organize the order of execution of test cases and map them to the python steps in step file wher the actual code implementation done, after completion of testing we generate html reports and push the code to azure devops git repositories. Tests are triggered automatically via AWS CodePipeline during code deployment
+
+challenges faced
+i have faced several challenges during testing, to give an example i'll take one scenario where our automation is getting failed in api testing due to time out issue. this happened beacuase api is following pagibnation due to huge response from api and it's taking more than one hour of time to get total response, but our python follow 1 hour token validation, if it exists again new execution starts. to resolve this issue we introduced mock database where api response data is stored in database and through datbase we perform testing.
+
+achievements
+i have created lot of re-usable functions to deal with aws components as well as response validations. this significantly improved test coverage and reduced manual effort.
+
+
+*****************************************************************************************************************************************************
+
+🔹Explain about hybrid framework:
+
+Sure! I'm currently working on an automation testing project for a retail supply chain application, where I built a Hybrid Framework from scratch using Java, Selenium WebDriver, and TestNG.
+
+Our framework is hybrid in nature because it combines multiple testing strategies:
+
+-> Data-Driven Testing using Excel for input values.
+
+-> Keyword-Driven Testing where reusable actions are stored as methods.
+
+Modular & POM-based design for scalability and maintainability.
+
+-> We follow the Page Object Model (POM) design pattern, where each web page is represented by a separate class. This keeps our locators and 	  interaction methods isolated from the test logic, making the framework easy to update and reusable.
+
+-> The test flow and assertions are managed using TestNG. It helps with:
+	1) Parallel execution
+	2) Grouping test cases
+	3) Parameterization
+	4) Generating test reports
+
+-> For reporting, we use Extent Reports to create rich HTML reports. These include:
+	1) Test case status (pass/fail/skip)
+	2) Screenshots on failure
+	3) Logs and system information
+
+The overall structure of our project includes:
+/tests        → TestNG classes
+/pages        → Page Object Model classes
+/utils        → Utilities like Excel readers, custom waits, etc.
+/base         → Base class to handle WebDriver setup/teardown
+/reports      → Extent HTML reports
+/testdata     → Excel sheets for data-driven testing
+We integrated it with Jenkins for CI, so every commit triggers the execution and sends reports via email.
+
+*****************************************************************************************************************************************************

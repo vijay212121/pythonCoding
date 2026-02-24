@@ -1,0 +1,465 @@
+JavascriptExecutor:
+
+🔹 Q1: What is JavascriptExecutor?
+It’s an interface in Selenium used to execute JavaScript code in the browser, helpful when WebDriver actions (click, sendKeys, scroll) don't work reliably.
+it is implemented by remote webdriver
+
+//declaration
+JavascriptExecutor js = (JavascriptExecutor)driver;
+-> We are type-casting the existing driver object to access JavaScriptExecutor methods.
+
+use case
+1.js.executeScript("arguments[0].scrollIntoView();", element); -->scroll
+2.js.executeScript("arguments[0].click();", element); -->click
+3.js.executeScript("arguments[0].setAttribute('value','John')", element) --> send text
+
+scrolling
+4. by pixel number -> js.executeScript("window.scrollBy(0,3000)", "");
+5. Scroll to end of page -->js.executeScript("window.scrollBy(0, document.body.scrollHeight);"); -->scroll bottom of page
+6. by visible element method -> js.executeScript("arguments[0].scrollIntoView();", element);
+	System.out.println(js.executeAsyncScript("return window.pageYOffset;"));
+7. String title = js.executeScript("return document.title;").toString(); --> getting page title
+8. String text = js.executeScript("return document.getElementById('id').textContent;").toString(); -->retrieve data
+9.js.executeScript("document.body.style.zoom='80%'"); --> zoomIn
+
+
+
+🔹 Q2: Why do we use JavascriptExecutor?
+Ans:
+To bypass WebDriver limitations
+
+For better scrolling, clicking, or DOM manipulation
+
+******************************************************************************************************************************************************
+
+Taking screenshots:
+->We typecast WebDriver to TakesScreenshot to access screenshot functionality.
+
+3 ways
+1. fullpage
+	TakesScreenshot ts = (TakesScreenshot)driver;
+		File sourceFile = ts.getScreenshotAs(OutputType.FILE);		
+		File targetFile = new File(System.getProperty("user.dir")+"\\Screenshots\\fullPage.png");		
+		sourceFile.renameTo(targetFile);//copying source file to target file
+2. specific area of the page/webelement
+		File sourceFile =element.getScreenshotAs(OutputType.FILE);
+		File targetFile = new File(System.getProperty("user.dir")+"\\Screenshots\\sectionOfPage.png");
+		sourceFile.renameTo(targetFile);
+		
+usage:
+most of the time we take screenshots when the test case fails
+
+******************************************************************************************************************************************************
+
+ChromeOptions():-
+ChromeOptions is a class in Selenium Java used to:
+-Set Chrome browser preferences
+-Add arguments, like headless, incognito, disable notifications
+-Add extensions
+-Set capabilities
+
+use:
+->To configure Chrome browser before launching (headless, incognito, disable popups, etc.)
+
+->declare before driver instance
+	ChromeOptions options = new ChromeOptions();
+	WebDriver driver = new ChromeDriver(options);
+	
+1. Run Chrome in Headless Mode (no GUI) ->	options.addArguments("--headless");
+2. Open in Incognito Mode -> options.addArguments("--incognito");
+3. Disable Browser Notifications ->	options.addArguments("--disable-notifications");
+4. accepts SSL Certificates -> options.setAcceptInsecureCerts(true);
+5. Enable Extensions -> File file = new File(<crx file path>);   ->	options.addExtensions(file)	
+ 
+*****************************************************************************************************************************************************
+
+Broken Link:-
+broken links are the links on a webpage which doesn't have any resource in the server. broken links return the http status codes >=400
+
+🔹 Q1. How do you check broken links in Selenium?	
+✅. I extract all <a> tags, get their href, and send HTTP requests using HttpURLConnection.
+
+
+🔹 Q2. Can Selenium detect response codes directly?	
+✅. No. Selenium is UI-only. We need Java's networking classes like HttpURLConnection for backend checks.
+
+🔹 Q3. What status codes are considered broken?
+✅. >=400 codes
+
+🔹 Q3. Why can't we just click all links with Selenium to check them?	
+✅. Clicking can be slow and error-prone. HTTP requests are faster and give accurate status codes.
+
+syntax:
+URL url = new URL(linkUrl);
+HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+conn.connect();
+check the status code for each link
+
+*****************************************************************************************************************************************************
+
+Shadow DOM:-  
+
+-> only CssSelector locator can be handled shadow DOM elements while locating Host
+
+🔹What is Shadow DOM?	
+✅ Shadow DOM is a DOM within a DOM, used to encapsulate the structure, style, and behavior of web components. It hides internals from the main document.
+
+🔹Why can’t Selenium interact with Shadow DOM directly?	
+✅Because shadow elements are outside the standard DOM tree and are encapsulated. Selenium doesn't support direct access.
+
+🔹How do you access shadow DOM in Selenium?	
+✅By using JavaScriptExecutor to fetch the shadow root and then locate elements within it.
+
+🔹Can you use XPath for Shadow DOM elements?/Why can’t we use normal locators for shadow elements?	
+✅No, XPath and regular locators don’t work. You must use JS to pierce the shadow DOM/Because they are encapsulated and don't show up in the regular DOM — Selenium’s findElement can’t access them directly.
+
+🔹What’s the difference between open and closed shadow DOM?	
+✅Open shadow DOM can be accessed via JavaScript. Closed shadow DOM cannot be accessed at all — it's completely encapsulated.
+
+🔹How to check if an element is inside a Shadow DOM?	
+✅Use browser dev tools. If you see #shadow-root in the structure, it’s inside shadow DOM.
+
+Can Shadow DOMs be nested?	Yes, one shadow host can contain another shadow host. Each level must be accessed step by step.
+How to handle nested shadow DOMs in Selenium?	Use JavaScriptExecutor recursively: access outer shadow root → find inner shadow host → access its shadow root → then interact with elements.
+
+Example:
+<custom-date-picker>
+  #shadow-root
+    <input type="date">
+</custom-date-picker>
+
+JavascriptExecutor js = (JavascriptExecutor) driver;
+
+// Step 1: Get shadow root element
+WebElement shadowHost = driver.findElement(By.cssSelector("custom-date-picker"));
+WebElement shadowRoot = (WebElement) js.executeScript("return arguments[0].shadowRoot", shadowHost);
+
+// Step 2: Find element inside shadow root
+WebElement dateInput = shadowRoot.findElement(By.cssSelector("input[type='date']"));
+dateInput.sendKeys("2025-04-10");
+
+*****************************************************************************************************************************************************
+
+Excel Data
+
+🔹 What is Apache POI and why is it used in Selenium?
+✅ Apache POI is a Java library used to read and write Microsoft Office files. In Selenium, it’s used to read/write test data from Excel sheets for data-driven testing
+
+🔹 What are HSSF and XSSF in Apache POI?
+✅
+HSSF – Handles .xls files (Excel 2003 or older)
+XSSF – Handles .xlsx files (Excel 2007 and above)
+
+🔹 How do you read data from an Excel file in Selenium?
+✅ You use the Apache POI library with classes like FileInputStream, Workbook, Sheet, Row, and Cell to read Excel data and use it in Selenium tests.
+
+usage:
+FileInputStream -> read file
+FileOutputStream ->write file
+
+XSSFWorkbook workbook = new XSSFWorkbook(file) ->while reading
+XSSFWorkbook workbook = new XSSFWorkbook() -> while writing
+
+XSSFSheet sheet = workbook.getSheet("Sheet1");
+XSSFSheet sheet = workbook.createSheet("Data");
+
+XSSFRow row = sheet.getRow(r);
+XSSFCell cell = row.getCell(c); ->cell.toString()
+
+XSSFRow row1 = sheet.createRow(0);
+row1.createCell(0).setCellValue("java");
+workbook.write(file);
+
+
+
+
+🔹 How do you determine the total number of rows and columns in a sheet?
+✅
+int rowCount = sheet.getLastRowNum(); // zero-based
+int colCount = sheet.getRow(0).getLastCellNum(); // one-based
+
+🔹What are cell types in Apache POI? How do you handle them?
+✅ Use Cell.getCellType() to check:
+CellType.STRING
+CellType.NUMERIC
+CellType.BOOLEAN
+CellType.FORMULA
+CellType.BLANK
+
+Use a switch statement to handle each appropriately
+
+
+*****************************************************************************************************************************************************
+
+🔹 What is TestNG?
+✅
+TestNG (Test Next Generation) is a Java-based testing framework. It supports annotations, parallel execution, dependency testing, and data-driven testing.
+
+Advantages:
+1. Test cases and test suites execution
+2. Grouping of Test cases
+3. Prioritize the test cases
+4. parameterization
+5. parallel testing
+6. Reports
+
+🔹 What are the main annotations in TestNG?
+✅ Annotation	Description
+@BeforeSuite	Runs before all tests in the suite
+@BeforeTest		Runs before <test> tag in XML
+@BeforeClass	Runs before the first method of current class
+@BeforeMethod	Runs before each test method
+@Test			Marks a test method
+@AfterMethod	Runs after each test method
+@AfterClass		Runs after all methods in current class
+@AfterTest		Runs after <test> tag in XML
+@AfterSuite		Runs after all tests in the suite
+
+🔹 How do you prioritize test cases?
+ANS: priority defines the execution order of test cases
+@Test(priority = 1)
+public void loginTest() {}
+
+@Test(priority = 2)
+public void dashboardTest() {}
+-> if u doesn't provide priority, then test methods execute in alphabetical order
+
+🔹 How do you run testNG tests?
+ANS:
+1. without using testNG.xml file -> right click on the file and runs as testNg appliaction
+2. using testNG.xml file -> if we want multiple files to execute, then this is best option. Add classNames in the <classes> tag in XML & run
+
+🔹 What is a TestNG XML file?
+ANS: A configuration file to organize and execute our tests. 
+Example:
+<suite name="Suite">
+  <test name="Test">
+    <classes>
+      <class name="tests.LoginTest"/>
+      <class name="tests.HomeTest"/>
+    </classes>
+  </test>
+</suite>
+
+🔹 What are Assertions?
+ANS: 
+Assertions are the validation points in TestNG tests. these verify whether the actual results match the expected results
+there are 2 types of assertions
+1) Hard assertios:
+	1. access from Assert Class
+	2. Methods are static
+	3. if Hard Assertions failed, then rest of the statements will not be executed
+2) Soft Assertions
+	1. Access Through SOftAssert Object
+	2.If the soft Assertions get failed, then rest of the statements still executes
+	3.These collect all assertion failures during execution and report them at the end ->softAssert.assertAll();
+	
+commonly used Assert methods:
+1. assertEquals(actual, expected)
+2. assertNotEquals(actual, expected)
+3. assertTrue(condition)	
+4. fail(message) -> explicitly fail
+
+
+🔹 What are dependsOnMethods in TestNG (with Selenium)?
+ANS: 
+dependsOnMethods is a TestNG annotation attribute that is used when one test method logically depends on the successful execution of another test method.
+syntax:@Test(dependsOnMethods = {"loginTest"})
+->If dependency fails then, Dependent test is skipped, not failed
+->it is not cross-class, Only works within the same class unless using dependsOnGroups
+
+
+🔹 What is grouping in TestNG?
+ANS: 
+In TestNG, grouping allows you to categorize and organize test cases into logical groups like smoke, regression, or sanity. You can then run specific sets of tests by selecting which groups to include or exclude.
+
+🔹 How do you define a group in TestNG?
+Ans: 
+define groups using the groups parameter in the @Test annotation:
+
+@Test(groups = {"smoke", "regression"})
+public void testMethod() {
+    // test code
+}
+
+🔹 How do you run groups in TestNG?
+ANS:
+we use testNG xmlfile to run our specific test cases, by using include, exclude tags.
+the hierarcgy follows, groups->run->include/exclude. and this hierachy will be declared before test tag level and after class tag level.
+
+
+🔹 What is enabled = false in TestNG?
+ANS: Used to disable a test method/skip method
+
+
+
+🔹 How do you run specific classes or methods using XML?
+✅ Add them in the <classes> tag in XML. You can also include/exclude specific methods using <methods> tag.
+
+🔹 How do you create dependencies between test methods?
+✅ @Test
+public void login() {}
+
+@Test(dependsOnMethods = "login")
+public void dashboard() {}
+
+🔹 How do you pass parameters from XML?
+✅
+@Parameters({"browser"})
+@Test
+public void test(String browser) {
+    System.out.println("Browser: " + browser);
+}
+
+<parameter name="browser" value="chrome"/>
+
+🔹 How to execute tests in parallel?
+✅ Use parallel="tests" or parallel="methods" in XML:
+<suite name="Suite" parallel="methods" thread-count="2">
+
+
+*****************************************************************************************************************************************************
+Parameterization:
+
+🔹 What is Parameterization in Selenium?
+ANS: Parameterization in Selenium means running the same test case multiple times with different sets of input data, used in data-driven testing.
+
+🔹 what are the Ways to Achieve Parameterization in Selenium
+ANS:
+1) Using TestNG @DataProvider
+	-> Using TestNG @DataProvider:- Data Provider is a method that returns an array of objects(2D array), which contains the test data. The test  
+	   method can then use this data to execute the tests with various inputs
+	-> @DataProvider() annotation is used to define this method and paasing name as attribute and indices(if required).
+	-> syntax:
+		@Test(dataProvider = "loginData")
+		public void loginTest(String username, String password) {//}
+		
+		@DataProvider(name = "loginData")
+		public Object[][] getData() {
+		return new Object[][] {
+        {"user1", "pass1"}}
+	
+2) Using TestNG @Parameters with testng.xml
+    -> In TestNG, we can pass parameters to our test methods from the testng.xml file using the @Parameters annotation
+	-> in xml file we define <parameter> tag by passing name and value. b/w test and class level 
+	-> @Parameters({"browser"}) -> access parametr in test method
+	
+🔹 What is the difference between @Parameters and @DataProvider?
+ANS:
+Feature			@Parameters			@DataProvider
+Source			testng.xml			Java method
+Data Sets		Single				Multiple
+Use Case		Config/environment	Data-driven testing
+Data Types		Only Strings		Any Object Type
+
+🔹 Can a @DataProvider method reside in a different class?	
+ANS: Yes. You can place a @DataProvider in a different class by making it static or referencing the class in the test using dataProviderClass
+example: 
+@Test(dataProvider = "getData", dataProviderClass = DataProviderUtils.class)
+public void loginTest(String username, String password) {
+    // Test logic
+}
+
+🔹 How do you fetch test data from an Excel sheet in a DataProvider?
+ANS: use Apache POI to read Excel files and extract test data into a 2D Object[][] array, then pass this data to test method through dataproviders.
+
+🔹 How cross-browser testing/parallel execution can be acheived?
+ANS:
+ implement cross-browser testing by passing the browser name as a parameter using TestNG's @Parameters annotation or @DataProvider. Based on the browser name, we can switch to the corresponding webdriver and execute our tests.
+ -> Inside the testng.xml, define the <parameter> tag and pass respective browser name in respective tests tests. in addition to this, include 
+	parallel="tests" at the <suite> level tag 
+
+  
+*****************************************************************************************************************************************************
+
+TestNG Listners:
+
+🔹 What is a TestNG Listener?
+ANS: 
+A Listener in TestNG is an interface that listens to events during the test execution lifecycle and allows us to perform actions based on those 
+events. For example, we can log test start/end, capture screenshots on failure, or even skip tests programmatically.
+
+🔹 Name some commonly used TestNG Listeners
+1) ITestListener (for test execution events)
+2) ISuiteListener (for suite-level events)
+3) IReporter (for report generation)
+
+🔹 What are the most commonly used listener methods in ITestListener?
+ANS:
+onTestStart()
+onTestSuccess()
+onTestFailure()
+onTestSkipped()
+onFinish()
+
+🔹 How do you implement a listener in TestNG?
+ANS:
+-> Create a class that implements ITestListener
+-> Override the methods you need
+-> Register the listener by adding listener tags in testNG.xml file
+
+🔹 How do you use Listeners with Extent Reports?
+ANS:
+To integrate Extent Reports with TestNG, I implement the ITestListener interface. Inside the listener methods like onTestSuccess(), onTestFailure(), 
+and onTestSkipped(), I log the test results using the ExtentTest object provided by Extent Reports.
+In the onStart() method, I configure the report using ExtentSparkReporter (or ExtentHtmlReporter in older versions), and attach it to the main ExtentReports object.
+Finally, I call extent.flush() in the onFinish() method to generate the final HTML report.
+
+*****************************************************************************************************************************************************
+
+Page Object Model:
+
+The (POM) is a design pattern where each web page is represented as a separate class. The main purpose of POM is to seperate the test code from webpage code and make the testscripts more maintanable and readable. Every page should have 3 sections
+
+🔹 How do you implement Page Object Model in Selenium?
+Answer:
+1)I create separate pageObjet classes for each web page, where this classcontains 3 sections
+	1. constructor
+	2. Locators
+	3. Action Methods
+2)I create test class and call those page classes from my test class to interact with webpages
+
+🔹 How do you create page Object class?
+ANS: 2 ways 
+1. using pagefactory(PageFactory.initElements(driver, this);) - (It initializes all elements written using @FindBy)
+	->Without initElements(), the annotated elements remain uninitialized and cause NullPointerException
+	->Without driver assignment, the page cannot interact with the browser
+	->PageFactory uses lazy initialization because elements are located only when they are accessed, not at object creation.
+2. without using page factory - Manually initializes elements using driver.findElement()
+
+*****************************************************************************************************************************************************
+
+🔹 How do you define a Singleton class? What is its use?
+A Singleton class is a design pattern in which only one instance of the class is created during the application's lifecycle. It provides a global point of access to that instance.
+
+In Java, we typically implement a Singleton by making the constructor private and providing a static method to return the single instance.
+
+Use:
+Singleton is useful when exactly one object is needed to coordinate actions across the system. For example, it’s commonly used in:
+Logging classes
+Database connections
+Configuration managers
+Driver managers in Selenium
+
+*******************************************************************************************************************************************************
+
+🔹 What is AJAX?
+AJAX stands for Asynchronous JavaScript and XML.
+
+It is a web development technique used to create faster, more interactive web applications by allowing web pages to send and receive data from a server in the background without reloading the entire page.
+
+Use Case:
+When you type in Google’s search bar and suggestions appear instantly — that’s AJAX in action. The browser fetches matching results from the server without reloading the whole page.
+
+Handle AJAX Calls in Selenium:
+Using Explicit Waits with ExpectedConditions
+
+*******************************************************************************************************************************************************
+
+
+	
+
+
+
+
+

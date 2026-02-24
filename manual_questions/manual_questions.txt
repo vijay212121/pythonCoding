@@ -1,0 +1,347 @@
+1. Have you worked in Agile methodology? Explain it.
+
+Yes, I have worked in Agile methodology. Agile is a software development approach that follows an iterative process, delivering small and incremental updates to the application.
+Key principles of Agile include:
+
+Scrum Frameworks: Agile is implemented using Scrum time-boxed sprints
+Daily Stand-ups: Short meetings to discuss progress, blockers, and tasks for the day.
+Sprint Planning & Retrospective: Before each sprint, tasks are planned; after completion, lessons are discussed.
+Customer Collaboration: Regular feedback from stakeholders is crucial.
+
+*******************************************************************************************************************************************************
+2. What is software testing?
+Answer: Software testing is the process of evaluating a software application to verify it meets specified requirements and is free from defects
+
+*******************************************************************************************************************************************************
+
+3. Explain the points you consider while writing a good test case.
+
+Clear & Concise Description: Clearly define the purpose of the test case.
+Preconditions: Mention any required setup.
+Test Steps: Detailed steps for execution.
+Expected Result: What the system should do.
+Test Data: If needed, provide required input data.
+Postconditions: Cleanup after test execution.
+Traceability: Map test cases to requirements/user stories.
+
+*******************************************************************************************************************************************************
+
+4. What is the Bug Life Cycle?
+
+The Bug Life Cycle includes the following states:
+
+New → Bug is reported.
+Assigned → Given to the developer.
+Open → Developer starts analyzing.
+Fixed → Developer fixes the issue.
+Retest → Tester verifies the fix.
+Verified → If fixed, tester marks it as verified.
+Closed → If the bug is completely resolved.
+Reopen → If the bug still exists.
+
+*******************************************************************************************************************************************************
+
+5. Difference between Test Scenario vs Test Case
+
+Test Scenario								Test Case
+High-level description of a test.			Step-by-step detailed instructions for testing.
+Covers multiple test cases.					Specific to one aspect of functionality.
+Example: "Verify login functionality."		Example: "Enter correct credentials and click Login."
+
+*******************************************************************************************************************************************************
+
+6. Difference between Functional vs Non-Functional Testing
+
+Functional Testing checks if the software functions as expected (e.g., login, registration).
+Non-Functional Testing evaluates performance, security, and usability.
+
+*******************************************************************************************************************************************************
+
+7. Difference between Smoke and Sanity Testing?
+Answer:
+-> Smoke Testing(Build verification testing):
+	verify that major functionalities of the application are working and the build is stable for further testing.
+	performed after new build received to 
+-> Sanity Testing(Bug fix verification testing):
+	check that the specific functionality works correctly
+	Performed after bug fix to 
+
+*******************************************************************************************************************************************************
+
+8. What is STLC in software testing?
+
+STLC (Software Testing Life Cycle) consists of:
+
+Requirement Analysis
+Test Planning
+Test Case Development
+Environment Setup
+Test Execution
+Test Closure
+
+*******************************************************************************************************************************************************
+
+9. What is a Test Plan?
+Answer: A test plan is a document that describes:
+Testing objectives and scope
+Test strategy and approach
+Resources (people, tools, environment)
+Schedule and milestones
+Entry and exit criteria
+Risks and mitigation
+Deliverables and responsibilities
+
+*******************************************************************************************************************************************************
+
+10.  What is Requirements Traceability Matrix (RTM)?
+Answer: RTM is a document that maps requirements to test cases to ensure:
+->Every requirement has at least one test case.
+->Easy impact analysis when requirements change
+
+*******************************************************************************************************************************************************
+
+11. What are entry and exit criteria in testing?
+Answer:
+Entry Criteria: Conditions that must be met to start testing (stable build,approved test plan, test environment ready, test data prepared).
+Exit Criteria: Conditions to stop testing (all planned tests executed, critical defects fixed, acceptable defect levels, coverage goals met, closure report prepared).
+
+
+*******************************************************************************************************************************************************
+
+12. Difference between Alpha and Beta Testing.
+Alpha Testing: Conducted in-house by testers before release.
+Beta Testing: Conducted by end-users in a real environment before final release.
+
+*******************************************************************************************************************************************************
+
+13. How do you decide which test cases to automate?
+High Regression Scenarios
+Repetitive Test Cases
+Data-Driven Scenarios
+Critical Functionalities
+
+*******************************************************************************************************************************************************
+
+14. Which test cases would you not automate?
+Exploratory Testing
+Tests with frequently changing UI
+One-time execution cases
+
+*******************************************************************************************************************************************************
+
+15. Is 100% automation possible?
+No, 100% automation is not feasible because exploratory, usability, and ad-hoc tests require manual effort.
+
+*******************************************************************************************************************************************************
+
+16. What are important things to consider when logging a bug?
+Clear Summary
+Steps to Reproduce
+Expected vs. Actual Results
+Screenshots/Logs
+Priority & Severity
+
+*******************************************************************************************************************************************************
+
+17. Where do you write your test cases? In Excel or some other tool?
+I use Azure DevOps for test management.
+
+*******************************************************************************************************************************************************
+
+18. Difference between Priority and Severity of a Bug with Example
+Priority: Business urgency to fix(set by Product Owner -> Fix for go‑live release((UI issue on home page)).
+Severity: Technical impact on the system(set by QA->App crash = high severity).
+
+*******************************************************************************************************************************************************
+
+19. How Many Types of Testing?
+Functional Testing: Unit, Integration, System, UAT.
+Non-Functional Testing: Performance, Security, Usability.
+Automation Testing: UI, API, Regression.
+
+*******************************************************************************************************************************************************
+
+20. Real-Time Scenario: If a bug is found on Friday, and the app is to be deployed Monday, what would you do?
+Assess the impact: If critical, escalate immediately.
+Work with developers to fix it over the weekend.
+Perform targeted testing instead of full regression.
+Seek approvals from stakeholders.
+
+*******************************************************************************************************************************************************
+
+21. What do you prefer, Manual or Automation Testing? Which is better for a team?
+Both are essential. Manual is needed for exploratory, while automation speeds up regression.
+
+*******************************************************************************************************************************************************
+
+22. How do you pick test cases for Regression Testing?
+High-risk areas
+Frequently used functionalities
+Recently fixed defects
+
+*******************************************************************************************************************************************************
+
+23. Differentiate between verification and validation.
+Answer:
+Verification: Checks if the product is built right (process‑oriented). Examples: reviews,
+walkthroughs, inspections.
+Validation: Ensures the right product is built (product‑oriented). Examples: functional and
+non‑functional testing.
+
+*******************************************************************************************************************************************************
+
+24. Difference between Quality Assurance (QA) and Quality Control (QC)?
+Answer:
+QA: Process‑focused and proactive; aims to prevent defects by improving processes (reviews,
+audits, standards).
+QC: Product‑focused and reactive; aims to find defects in the actual product (testing,
+inspections).
+Simple view: QA prevents defects; QC finds defects.
+
+
+*******************************************************************************************************************************************************
+
+25. What are the different levels of testing?
+Answer:
+Unit Testing: Individual components or functions (usually by developers).
+Integration Testing: Interactions between integrated modules.
+System Testing: End‑to‑end testing of the complete system.
+Acceptance Testing: Validation by users or clients (UAT).
+
+*******************************************************************************************************************************************************
+
+26. Black box testing vs white box testing?
+Answer:
+Black box testing verifies software functionality without knowing internal code(Testers/QA), while white box testing validates internal code logic and structure with full knowledge of implementation.
+
+*******************************************************************************************************************************************************
+
+27. Regression Testing:
+Regression testing verifies that recent code changes have not affected existing features of the application.
+retesting:
+verifies the specific bug fix by re-executing the failed test case.
+
+*******************************************************************************************************************************************************
+
+28. Testing Techniques:
+1. Equivalence Partitioning (EP) - divide input data into valid and invalid groups (called partitions).just test one value from each group.
+2. Boundary Value Analysis (BVA) - Tests at boundary values of input data.
+3. Decision Table Testing(DTT) - Used when system behavior depends on multiple conditions.
+4. State Transition Testing(STT) – test valid and invalid state changes.
+5. Use Case Testing(UCT) – test scenarios based on user workflows.
+
+
+
+EP Example:
+Let’s say an input field accepts ages between 18 and 60.
+
+Partition Type	Range	Test Case Example
+Valid	18 to 60	30 ✅
+Invalid	Less than 18	15 ❌
+Invalid	Greater than 60	65 ❌
+
+BVA Example (same age field: 18–60):
+Condition	Value Tested
+Lower Boundary	17 ❌, 18 ✅, 19 ✅
+Upper Boundary	59 ✅, 60 ✅, 61 ❌
+So, in BVA, you test just below, on, and just above the boundaries.
+
+DTT Example: Loan Approval System
+Loan approved only if:
+Salary is high
+Credit score is good
+
+STT Example: ATM PIN Attempts
+User enters correct PIN → access granted
+3 wrong attempts → card blocked
+
+UCT example - Login → Search → Add to cart → Payment → Order confirmation
+
+*******************************************************************************************************************************************************
+
+29. Bug Leakage vs. Bug Release
+Bug Leakage:
+A bug that escaped testing and went live	
+Bug Release:
+A known bug that is intentionally released
+
+*******************************************************************************************************************************************************
+
+30. Hotfix vs. Patch vs. Release
+Term			Hotfix								Patch									Release
+What is it?		A quick fix for a critical issue	A fix for known bugs (non-critical)		A full deployment with new features or fixes
+Urgency			Very High							Medium									Planned
+Target			Production (immediate)				Could be dev/test/prod					Typically staged or scheduled
+
+*******************************************************************************************************************************************************
+
+31. what are the principles of testing?
+
+1️. Testing shows presence of defects, not absence
+2. Exhaustive testing is impossible - cannot test every possible input, combination, and scenario.
+3. Early testing saves time and cost
+4. Defect clustering - Most defects are found in a small number of modules(80/20 rule)
+5. Pesticide paradox - some tests stop finding bugs over time(we must evolve tests for new builds)
+6. Testing is context dependent - Testing approach depends on the type of application.
+7. Absence of errors is a fallacy - Bug-free software is meaningless if requirements are wrong
+
+*******************************************************************************************************************************************************
+
+32. Important testing metrics.
+Answer:
+Test case execution progress (planned vs executed)
+Pass/Fail ratio
+Defect density -  number of defects per unit size of softwar
+Defect leakage - A bug that escaped testing and went live
+Defect rejection ratio -  measures the percentage of defects reported by testers that are later rejected 
+Test coverage (requirements, code, risk)
+
+*******************************************************************************************************************************************************
+
+33. Common automation frameworks.
+Answer:
+Data‑Driven Framework – test data kept externally (Excel, CSV, DB).
+Keyword‑Driven Framework – actions represented as keywords (click, type).
+Hybrid Framework – combination of data‑ and keyword‑driven.
+Page Object Model (POM) – each page represented by a class with locators and actions.
+BDD Framework – uses Gherkin (Given‑When‑Then) with tools like Cucumber.
+
+*******************************************************************************************************************************************************
+
+34. What is Compatibility Testing?
+Answer: It ensures the application behaves correctly across different environments: browsers, OS,
+devices, and hardware configurations.
+
+*******************************************************************************************************************************************************
+
+35. Explain the Test Automation Pyramid.
+Answer:
+Base: Many unit tests (fast, cheap).
+Middle: Fewer integration/service tests.
+Top: Least number of UI/E2E tests (slow, expensive).
+
+*******************************************************************************************************************************************************
+
+36. shift-left testing vs shift-right testing?
+Answer:
+Shift-left testing is the practice of performing testing earlier in the development lifecycle to detect defects as soon as possible.
+Shift-right testing focuses on validating application behavior in real production environments after deployment.(Monitoring, feedback, performance)
+
+*******************************************************************************************************************************************************
+
+37. What are test artefacts?
+Answer:
+Test artifacts are the documents and outputs created during testing, such as test plans, test cases, defect reports, and test reports, used to manage and track testing activities.
+
+*******************************************************************************************************************************************************
+
+38. 
+🔹 Ad-hoc Testing:
+Testing done randomly without any planning or documentation to find defects quickly.
+🔹 Exploratory Testing:
+Testing where learning, test design, and execution happen simultaneously.
+🔹 Monkey Testing:
+Testing by giving random inputs without any logic to see if system crashes.
+
+*******************************************************************************************************************************************************
+
