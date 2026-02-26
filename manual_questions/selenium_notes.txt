@@ -456,10 +456,207 @@ Using Explicit Waits with ExpectedConditions
 
 *******************************************************************************************************************************************************
 
+1️. What is Selenium?
 
+Selenium is an open-source automation testing tool used to automate web applications across different browsers and platforms.
+It simulates real user actions such as clicking, typing, scrolling, and navigation to validate web application behavior.
+
+*******************************************************************************************************************************************************
+
+2. Selenium Components
+
+Selenium is a suite of tools, not a single tool.
+
+1. Selenium WebDriver
+	Core component of Selenium
+	Automates browsers by interacting directly with the browser
+2. Selenium IDE:
+	Record & playback tool (browser extension)
+3. Selenium Grid:
+	Executes tests in parallel
+	Runs tests on multiple browsers, OS, and machines
 	
+*******************************************************************************************************************************************************3. Selenium 4 Architecture (New)
+
+Selenium 4 follows the W3C WebDriver protocol, allowing direct communication between the Selenium client and browser drivers, resulting in faster, more stable, and standardized browser automation.
+
+Test Script
+   ↓
+Selenium Client Library
+   ↓
+W3C WebDriver Protocol
+   ↓
+Browser Driver
+   ↓
+Browser
+
+*******************************************************************************************************************************************************
+
+4. What is a Maven Project? (Interview Answer)
+
+A Maven project is a Java-based project that uses Apache Maven as its build and dependency management tool.
+Maven helps in managing project structure, external libraries, build process, and test execution using a single configuration file called pom.xml.
 
 
+-> Why Maven is used?
+In real projects, Maven is used to:
+Manage dependencies automatically
+Maintain a standard project structure
+Build the project (compile, test, package)
+Integrate with TestNG, Selenium, JUnit
+Run tests from command line / CI tools
+Avoid jar conflicts and version issues
+
+->Maven Lifecycle (Very Important)
+Maven follows predefined build lifecycle phases:
+clean → removes old build files
+compile → compiles source code
+test → executes test cases
+package → creates jar/war file
+install → installs build in local repo
+deploy → deploys to remote repo
+*******************************************************************************************************************************************************
+
+What are different types of waits in Selenium?
+Selenium provides three types of waits to handle synchronization issues:
+
+• Implicit Wait: Sets a default waiting time for all elements throughout the session.
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+• Explicit Wait: Waits for specific conditions on particular elements before
+performing actions.
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("submitB
+		tn")));
+
+• Fluent Wait: Provides more control with custom polling frequency and exception
+handling.
+		Wait<WebDriver> wait = new FluentWait<>(driver)
+		 .withTimeout(Duration.ofSeconds(10))
+		 .pollingEvery(Duration.ofMillis(500))
+		 .ignoring(NoSuchElementException.class);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("element
+		")));
+
+*******************************************************************************************************************************************************
+
+Q. How would you handle dynamic web elements or elements with frequently changing IDs?
+Strategies to handle dynamic elements:
+
+1. Use Partial Attribute Matching:
+By.xpath("//button[starts-with(@id, 'btn_')]")
+By.cssSelector("button[id*='dynamic']")
+
+2. Use Relative XPath Based on Text Content:
+By.xpath("//button[contains(text(), 'Submit')]")
+By.xpath("//label[text()='Username']/following::input")
+
+3. Use WebDriverWait with Custom Expected Condition:
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//butt
+on[contains(@class, 'dynamic')]")));
+
+4. Use Explicit Waits Before Interaction:
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+WebElement element =
+wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@
+onclick*='submit']")));
+element.click();
+
+*******************************************************************************************************************************************************
+
+Q. How do you handle StaleElementReferenceException?
+
+StaleElementReferenceException occurs when a WebElement reference becomes stale
+(DOM has been refreshed).
+
+Solutions:
+1. Re-locate the element after action:
+WebElement element = driver.findElement(By.id("dynamicElement"));
+element.click();
+// DOM refreshes
+element = driver.findElement(By.id("dynamicElement")); // Re-locate
+element.sendKeys("text");
+
+2. Use Explicit Wait with WebDriverWait:
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+WebElement element =
+wait.until(ExpectedConditions.presenceOfElementLocated(By.id("element")
+));
+element.click();
+
+3. Wrap in Try-Catch and Retry:
+int attempts = 0;
+while (attempts < 3) {
+ try {
+ driver.findElement(By.id("element")).click();
+ break;
+ } catch (StaleElementReferenceException e) {
+ attempts++;
+ 
+*******************************************************************************************************************************************************
+
+Q. How do you handle file uploads and downloads in Selenium?
+// File Upload
+WebElement uploadElement = driver.findElement(By.id("fileUpload"));
+uploadElement.sendKeys("C:\\path\\to\\file.txt");
+
+//File downloads
+HashMap<String, Object> prefs = new HashMap<>();
+prefs.put("download.default_directory", "C:\\Downloads");
+prefs.put("download.prompt_for_download", false);
+
+ChromeOptions options = new ChromeOptions();
+options.setExperimentalOption("prefs", prefs);
+
+WebDriver driver = new ChromeDriver(options);
+
+//Check file exists in folder:
+File file = new File("C:\\Downloads\\report.pdf");
+Assert.assertTrue(file.exists());
+
+👉 File upload is handled using sendKeys() to provide file path to input type=file element.
+👉 File download is handled by configuring browser settings to auto-download files and verifying file presence in the download directory.
+
+*******************************************************************************************************************************************************
+
+Q.common Exceptions in selenium?
+
+1. StaleElementReferenceException ->Element was found earlier but the page refreshed or DOM changed, so the reference is no longer valid.
+	👉 Re-locate the element before interacting
+	👉 Use explicit wait with refreshed condition
+	👉 Retry logic
+2. NoSuchElementException -> Selenium cannot find the element in DOM.
+	👉 Used explicit wait for element presence
+	👉 Verified locator
+3. ElementNotInteractableException -> Element exists but cannot be interacted with.
+	When it happens:
+		✔ Hidden element
+		✔ Disabled element
+		✔ Not visible yet
+	How I handled it
+		👉 Wait for visibility or clickable condition
+		👉 Scroll into view
+4. TimeoutException -> Wait condition not satisfied within time.
+	When it happens:
+		✔ Element takes too long to load
+		✔ Wrong wait condition
+	How I handled it:
+		👉 Increased wait time
+		👉 Checked correct condition
+		👉 Improved locator strategy
+		
+5. ElementClickInterceptedException -> Another element blocks the click.
+	When it happens:
+		✔ Popup or loader overlay
+		✔ Sticky header
+		✔ Animation
+	How I handled it:
+		👉 Wait for overlay to disappear
+		👉 Scroll to element
+		👉 Use JavaScript click if needed
+		
+*******************************************************************************************************************************************************
 
 
-
+				
