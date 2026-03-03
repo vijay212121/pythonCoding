@@ -14,7 +14,7 @@ use case
 3.js.executeScript("arguments[0].setAttribute('value','John')", element) --> send text
 
 scrolling
-4. by pixel number -> js.executeScript("window.scrollBy(0,3000)", "");
+4. by pixel number -> js.executeScript("window.scrollBy(0,3000);", "");
 5. Scroll to end of page -->js.executeScript("window.scrollBy(0, document.body.scrollHeight);"); -->scroll bottom of page
 6. by visible element method -> js.executeScript("arguments[0].scrollIntoView();", element);
 	System.out.println(js.executeAsyncScript("return window.pageYOffset;"));
