@@ -19,16 +19,22 @@ final_list = []
 print(zeroes_sort_end(lst_))
 '''
 
-lst=[1,0,2,4,0,5,0,9,0,7,0,6]
-k=0
+# Move all zeros in a list to the end while maintaining the order of non-zero elements
+
+lst = [1, 0, 2, 4, 0, 5, 0, 9, 0, 7, 0, 6]
+k = 0  # Pointer to place the next non-zero element
+
+# Step 1: Move all non-zero elements to the front
 for i in range(len(lst)):
-    if lst[i]!=0:
-        lst[k]=lst[i]
-        k+=1
+    if lst[i] != 0:      # Check if current element is non-zero
+        lst[k] = lst[i]  # Place it at index k
+        k += 1           # Move k to the next position
 
-for i in range(k,len(lst)):
-    lst[i]=0
+# Step 2: Fill the remaining positions with zeros
+for i in range(k, len(lst)):
+    lst[i] = 0
 
+# Result
 print(lst)
 
 
