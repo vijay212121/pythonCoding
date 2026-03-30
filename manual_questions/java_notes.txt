@@ -1,0 +1,428 @@
+1. What is Java?
+Answer: Java is a high-level, object-oriented programming language
+developed by Sun Microsystems.
+
+2. What is the difference between JDK, JRE, and JVM?
+Answer:
+• JDK (Java Development Kit) includes JRE and development tools.
+• JRE (Java Runtime Environment) provides libraries and JVM to run
+Java applications.
+• JVM (Java Virtual Machine) executes Java bytecode.
+
+3. List out the main features of Java?
+Answer:
+• Object-oriented
+• Platform-independent
+• Simple and Familiar
+• Secure
+• Robust and Multithreaded
+• High Performance
+*****************************************************************************************************************************************************
+
+1. what is a class & Object?
+ans:
+class -> A class is a blueprint to create objects.
+object -> An object is an instance of a class.
+
+*****************************************************************************************************************************************************
+
+2. what is oops?
+Ans:
+OOP (Object-Oriented Programming) in Java is a programming style that organizes code using objects and classes.
+
+1. Inheritance:
+Inheritance allows one class to inherit properties and methods from another class
+
+Types->
+🔹 1. Single Inheritance -> One child class inherits from one parent class.
+class A {}
+class B extends A {}
+
+🔹 2. Multilevel Inheritance -> A class inherits from a class, which itself inherits from another class.
+class A {}
+class B extends A {}
+class C extends B {}
+
+🔹 3. Hierarchical Inheritance -> Multiple child classes inherit from one parent class.
+class A {}
+class B extends A {}
+class C extends A {}
+
+🔹 4. Multiple Inheritance (Not supported with classes) -> A class cannot inherit from multiple classes in Java.
+// Not allowed
+class A {}
+class B {}
+class C extends A, B {} // ❌ error
+👉 But it can be achieved using interfaces.
+
+Q) why Multiple Inheritance is not allowed in classes? but in interfaces?
+Ans:
+1. To avoid ambiguity in classes
+2. interfaces don’t have method implementation (by default).
+
+*****************************************************************************************************************************************************
+
+3. what is encapsulation?
+Ans:
+Restricting the access to the internal components from outside world. It binds both data members and data methods in a single unit(class).
+this can be achieved by access modifiers(private), and access data through public setters and getters
+
+Example:
+class Student {
+    private int marks;   // private variable (hidden)
+
+    // setter method
+    public void setMarks(int m) {
+        marks = m;
+    }
+
+    // getter method
+    public int getMarks() {
+        return marks;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+
+        s.setMarks(90);   // setting value
+        System.out.println(s.getMarks()); // getting value
+    }
+}
+
+
+We use encapsulation in POM(Page Object Model):
+1. Hide WebElements (locators)(username, password, loginBtn)
+2. Expose only user actions (methods)(enterUsername(), enterPassword(), clickLogin())
+
+*****************************************************************************************************************************************************
+
+4. What is polymorphism?
+Ans:
+Polymorphism allows the same method or function name to perform different tasks based on the context.
+
+🔹 Types of Polymorphism in Java:
+1. Compile-Time Polymorphism (Method Overloading)
+Same method name, but no of parameters or order of parameters or datatype of parameters should be different
+Example:
+class Calculator {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    double add(double a, double b) {
+        return a + b;
+    }
+}
+
+2. Runtime Polymorphism (Method Overriding)
+Same method name, but different implementation in child class
+Example:
+class Payment {
+    void pay() {
+        System.out.println("Generic payment");
+    }
+}
+
+class UPI extends Payment {
+    void pay() {
+        System.out.println("Payment via UPI");
+    }
+}
+
+Usage in selenium:
+1. Method Overloading:
+
+class ElementUtil {
+
+    // Basic login
+    void login(String username, String password) {
+        System.out.println("Login with username & password");
+    }
+
+    // Login with role (Overloading)
+    void login(String username, String password, String role) {
+        System.out.println("Login as " + role);
+    }
+}
+
+
+
+2. Method Overriding:
+
+class BasePage {
+    void login(String username, String password) {
+        System.out.println("Base login logic");
+    }
+}
+
+class LoginPage extends BasePage {
+
+    @Override
+    void login(String username, String password) {
+        System.out.println("Login with wait and validations");
+    }
+}
+
+*****************************************************************************************************************************************************
+
+5. What is Abstraction?
+Abstraction means hiding implementation details and showing only the essential features to the user
+
+1️⃣ Abstract Class
+-> Can have abstract methods (no body) + concrete methods
+-> Cannot be instantiated
+-> We cannot create an object of an abstract class, but we can use it as a reference to hold child class objects
+->Concrete methods in an abstract class can be called using child class objects or from within the class itself
+
+abstract class Payment {
+    abstract void pay();  // abstract method
+
+    void message() {
+        System.out.println("Payment started");
+    }
+}
+
+class UPI extends Payment {
+    void pay() {
+        System.out.println("UPI payment");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Payment p = new UPI();
+
+        p.message(); // calling concrete method
+        p.pay();     // calling abstract method implementation
+    }
+}
+
+usage in selenium:
+You use methods like:
+driver.get()
+driver.findElement()
+
+*****************************************************************************************************************************************************
+
+6. What is an Interface?
+Ans:
+-> An interface is a blueprint that contains only method declarations (no implementation)
+-> Achieves 100% abstraction
+-> Supports multiple inheritance
+
+Example:
+interface Payment {
+    void pay();  // abstract method
+}
+
+class UPI implements Payment {
+    public void pay() {
+        System.out.println("UPI payment");
+    }
+}
+
+usage in Selenium:
+WebDriver driver = new ChromeDriver();
+👉 WebDriver is an interface
+👉 ChromeDriver is a class implementing it
+
+*****************************************************************************************************************************************************
+
+7. Difference between Interface and abstraction?
+Ans:
+Abstraction is a concept of hiding implementation details, whereas an interface is a way to achieve abstraction by defining a contract that classes
+must implement.
+
+*****************************************************************************************************************************************************
+
+8. What is Constructor?
+Ans:
+A constructor is special method with same name as class and is automatically invoked when an object is created.
+-> No return type
+-> Used to initialize variables
+Example:
+class Student {
+    String name;
+
+    // Constructor
+    Student(String name) {
+        this.name = name;
+    }
+}
+Student s = new Student("Vijay");
+
+🔹 Types of Constructors
+1. Default Constructor
+class Test {
+    Test() {
+        System.out.println("Default constructor");
+    }
+}
+
+2. Parameterized Constructor
+class Test {
+    Test(String name) {
+        System.out.println(name);
+    }
+}
+
+3. Copy Constructor (Concept)
+class Test {
+    String name;
+
+    Test(Test t) {
+        this.name = t.name;
+    }
+}
+
+🔹 Constructor Overloading:
+class Test {
+
+    Test() {
+        System.out.println("Default");
+    }
+
+    Test(String name) {
+        System.out.println(name);
+    }
+}
+
+Usage in selenium:
+class LoginPage {
+    WebDriver driver;
+
+    // Constructor
+    LoginPage(WebDriver driver) {
+        this.driver = driver;
+    }
+}
+
+*****************************************************************************************************************************************************
+
+9. 🔹 this Keyword
+Ans:
+“this keyword refers to the current object of the class.
+
+1️⃣ To refer instance variables
+class Student {
+    String name;
+
+    Student(String name) {
+        this.name = name; // current object variable
+    }
+}
+👉 Used when local variable and instance variable have same name
+
+2️⃣ To call current class method
+class Test {
+    void display() {
+        System.out.println("Display");
+    }
+
+    void show() {
+        this.display(); // calling current class method
+    }
+}
+
+
+
+3️⃣ Constructor chaining ->process of invoking one constructor from another constructor using this() or super()
+class Test {
+
+    Test() {
+        this("Vijay"); // calling parameterized constructor
+    }
+
+    Test(String name) {
+        System.out.println(name);
+    }
+}
+
+🔹 super Keyword
+Ans:
+👉 “super keyword is used to refer to the immediate parent class object.”
+-> super keyword is used to access parent class variables, methods, and constructors.
+
+Example:
+class Parent {
+    void show() {
+        System.out.println("Parent method");
+    }
+}
+
+class Child extends Parent {
+    void show() {
+        super.show(); // calling parent method
+        System.out.println("Child method");
+    }
+}
+
+usage in selenium:
+
+class BasePage {
+    WebDriver driver;
+
+    BasePage(WebDriver driver) {
+        this.driver = driver;
+    }
+}
+
+class LoginPage extends BasePage {
+
+    LoginPage(WebDriver driver) {
+        super(driver); // calling parent constructor
+    }
+}
+
+*****************************************************************************************************************************************************
+
+Q.difference between == and .equals() in java?
+
+👉 == → compares memory/reference (address)
+👉 .equals() → compares actual content (value)
+
+Example:
+String s1 = new String("hello");
+String s2 = new String("hello");
+System.out.println(s1 == s2);        // ❌ false
+System.out.println(s1.equals(s2));   // ✅ true
+
+why?
+s1 == s2 → checks if both point to same object → ❌ No
+s1.equals(s2) → checks content → ✅ "hello" == "hello"
+
+*****************************************************************************************************************************************************
+Static Keyword:
+Static keyword is used to create class-level variables and methods that are shared across all objects.
+-> No need to create object
+Final Keyword:
+final is used to declare a constant variable or a method that cannot be
+overridden or a class that cannot be extended.
+
+*****************************************************************************************************************************************************
+
+9. Explain the try, catch, and finally blocks.
+Answer:
+-> try block contains the code that may throw an exception.
+-> catch block handles the exception.
+-> finally block contains code that will be executed regardless of whether an exception is thrown or not.
+
+*****************************************************************************************************************************************************
+
+Q. What is an exception in Java?
+Answer: An exception is an event that occurs during the execution of a program and disrupts the normal flow of instructions.
+
+Q. Explain the difference between checked and unchecked exceptions.
+Answer:
+Checked exceptions are checked at compile-time and must be handled using try-catch or declared in the method signature using throws.
+Unchecked exceptions are not checked at compile-time and include RuntimeException and its subclasses.
+
+Q.What is the purpose of the throw keyword?
+Answer: The throw keyword is used to explicitly throw an exception within a method.
+
+Q. Explain the throws clause.
+Answer: The throws clause is used in method declarations to indicate that the method may throw one or more exceptions. It is used to
+delegate the responsibility of exception handling to the calling method.
+
