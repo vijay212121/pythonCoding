@@ -426,3 +426,174 @@ Q. Explain the throws clause.
 Answer: The throws clause is used in method declarations to indicate that the method may throw one or more exceptions. It is used to
 delegate the responsibility of exception handling to the calling method.
 
+*****************************************************************************************************************************************************
+
+Q. what is Java Collection Framework?
+Ans:
+The Java Collections Framework is a set of interfaces and classes in Java that provides reusable data structures like lists, sets, and maps,
+along with algorithms to manipulate them efficiently
+
+-> It consists of three main parts:
+1. Interfaces like List, Set, and Map that define the structure
+2. Implementations like ArrayList, HashSet, and HashMap that provide concrete behavior
+3. Algorithms like sorting and searching provided by utility methods
+
+*****************************************************************************************************************************************************
+
+Q. JCF Hierarchy?
+Ans:
+Collection (interface):
+-> The root of most collection types (except Map)
+-> Defines basic operations like add, remove, size, etc.
+
+📌 List:
+-> Ordered collection (allows duplicates)
+-> Elements can be accessed by index
+Implementations: ArrayList, LinkedList, Vector, Stack
+
+📌 Set
+->Unordered collection (no duplicates allowed)
+Implementations: HashSet, LinkedHashSet, TreeSet
+
+📌 Queue
+-> Stores elements for processing (typically FIFO)
+Implementations: PriorityQueue, LinkedList (also implements Queue), ArrayDeque
+
+📌 Map
+-> Stores key-value pairs (no duplicate keys)
+-> Part of JCF but does NOT extend Collection
+Implementations: HashMap, LinkedHashMap, TreeMap, Hashtable
+
+🔷 Iterator Interfaces
+-> Used to traverse collections:
+Iterator
+ListIterator (for List only)
+
+*****************************************************************************************************************************************************
+
+Q. 🔹 List (Ordered, Allows Duplicates)
+👉 Use when: You need order + index-based access
+Common Classes:
+
+✅ ArrayList
+-> Backed by dynamic array
+-> Fast for reading, slow for insertion in middle
+-> ArrayList allows duplicates and preserves insertion order, so elements can be accessed using index positions.
+
+Example:
+List<String> list = new ArrayList<>();
+list.add("A");
+list.add("B");
+list.add("A"); // duplicates allowed
+System.out.println(list.get(1)); // B
+
+🗣️ Interview line:
+“Use ArrayList when frequent reads are required.”
+
+✅ LinkedList
+-> Doubly linked list
+-> Fast insertion/deletion
+
+Example1:
+LinkedList<Integer> list = new LinkedList<>();
+list.add(10);
+list.add(20);
+list.addFirst(5);
+System.out.println(list);
+
+Example2:
+List<Integer> list = new LinkedList<>();
+list.add(0, 5); // insert at beginning
+list.add(10);
+list.add(20);
+
+System.out.println(list);
+
+🗣️ Interview line:
+“Preferred when insertions/deletions are frequent.”
+
+//not in use
+✅ Vector / Stack (Legacy)
+Thread-safe but slower
+
+Example:
+Stack<Integer> stack = new Stack<>();
+stack.push(10);
+stack.push(20);
+System.out.println(stack.pop()); // 20
+
+🗣️ Interview line:
+“Stack follows LIFO (Last In First Out).”
+
+*****************************************************************************************************************************************************
+
+Q. what is set?
+Ans:
+Set is a collection that does not allow duplicate elements and is used when uniqueness of data is required.
+✅1. HashSet
+->No order
+-> Fast operations (O(1))
+-> Uses hashing
+
+Example:
+Set<Integer> set = new HashSet<>();
+set.add(10);
+set.add(20);
+set.add(10); // ignored
+System.out.println(set); //o/p ->[10, 20]
+
+✅2. LinkedHashSet
+-> Maintains insertion order
+-> Slightly slower than HashSet
+//same example as previous one
+
+✅3. TreeSet
+-> Stores elements in sorted order
+
+Example:
+Set<Integer> set = new TreeSet<>();
+set.add(30);
+set.add(10);
+System.out.println(set); // [10, 30]
+
+*****************************************************************************************************************************************************
+
+Q. What is Queue?
+Ans:
+Queue is a collection that follows FIFO (First In First Out).
+
+📦 Common Implementations
+LinkedList → normal FIFO queue
+PriorityQueue → priority-based (not FIFO)
+
+🔧 Important Methods
+offer() → add element
+poll() → remove element
+peek() → view front
+
+*****************************************************************************************************************************************************
+
+Q. what is map?
+Ans:
+Map is a collection that stores key-value pairs, where keys are unique.
+
+📦 Common Implementations
+HashMap → fast, unordered
+LinkedHashMap → maintains insertion order
+TreeMap → sorted by keys
+
+🔧 Important Methods:
+put(key, value) → add data
+get(key) → retrieve value
+remove(key) → delete
+containsKey() → check key
+
+Example:
+Map<Integer, String> map = new HashMap<>();
+map.put(1, "A");
+map.put(2, "B");
+map.put(1, "C"); // replaces A
+
+System.out.println(map.get(1)); // C
+
+*****************************************************************************************************************************************************
