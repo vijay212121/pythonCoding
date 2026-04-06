@@ -26,6 +26,45 @@ object -> An object is an instance of a class.
 
 *****************************************************************************************************************************************************
 
+Q. what is String, StringBuffer and String Builder?
+Ans:
+1. String:
+-> String is Immutable means Once created, its value cannot be changed. Any modification creates a new String object.
+-> thread-safe but slower for frequent modifications.
+2. StringBuffer is mutable, thread-safe, and slightly slower due to synchronization.
+3. StringBuilder is mutable, not thread-safe, and faster, suitable for single-threaded scenarios.
+
+*****************************************************************************************************************************************************
+Q. what is Memory Management in java?
+Ans:
+Java manages memory automatically using Heap for storing objects and Stack for storing method calls and local variables. The Garbage Collector
+frees memory of objects that are no longer referenced.
+
+*****************************************************************************************************************************************************
+
+Q. What is Multi-threading?
+Ans:
+Multithreading in Java is a programming feature that allows concurrent execution of two or more threads within a single program.
+Each thread runs independently, which improves the performance of applications, especially on multi-core processors.
+
+*****************************************************************************************************************************************************
+
+Q.Array vs arraylist?
+Ans:
+“Array is a fixed-size data structure that can store both primitives and objects, while ArrayList is a dynamic, resizable collection that only
+stores objects and provides many utility methods.”
+
+Access:
+Array → arr[index]
+ArrayList → list.add() / list.get()
+
+Example:
+int[] arr = {1, 2, 3};          // fixed size
+ArrayList<Integer> list = new ArrayList<>();
+list.add(1);                    // dynamic
+
+*****************************************************************************************************************************************************
+
 2. what is oops?
 Ans:
 OOP (Object-Oriented Programming) in Java is a programming style that organizes code using objects and classes.
@@ -476,7 +515,7 @@ Q. 🔹 List (Ordered, Allows Duplicates)
 Common Classes:
 
 ✅ ArrayList
--> Backed by dynamic array
+-> uses dynamic array
 -> Fast for reading, slow for insertion in middle
 -> ArrayList allows duplicates and preserves insertion order, so elements can be accessed using index positions.
 
@@ -491,8 +530,9 @@ System.out.println(list.get(1)); // B
 “Use ArrayList when frequent reads are required.”
 
 ✅ LinkedList
--> Doubly linked list
--> Fast insertion/deletion
+-> uses doubly linked list
+-> Fast insertion/deletion, slow access
+-> Uses nodes (data + pointers)
 
 Example1:
 LinkedList<Integer> list = new LinkedList<>();
@@ -595,5 +635,113 @@ map.put(2, "B");
 map.put(1, "C"); // replaces A
 
 System.out.println(map.get(1)); // C
+
+*****************************************************************************************************************************************************
+
+Q. Can we overload or override static methods in Java?
+Ans:
+1. overloading: Yes, You can have multiple static methods with the same name but different parameters in the same class.
+example:
+class Test {
+    static void display() {
+        System.out.println("No args");
+    }
+
+    static void display(int a) {
+        System.out.println("With int: " + a);
+    }
+
+    public static void main(String[] args) {
+        Test.display();
+        Test.display(5);
+    }
+}
+
+2. Overriding:
+-> Not possible in the true sense: Static methods belong to the class, not the object.
+-> If you declare a static method in a subclass with the same signature, it hides the superclass method(called method hiding),
+    it does not override it.
+-> Behavior depends on reference type, not object type.
+
+Example:
+class Parent {
+    static void display() {
+        System.out.println("Parent static method");
+    }
+}
+
+class Child extends Parent {
+    static void display() {
+        System.out.println("Child static method");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Parent p = new Child();
+        p.display(); // Calls Parent's method
+        Child.display(); // Calls Child's method
+    }
+}
+
+->Notice how p.display() still calls the Parent method. This is why it’s method hiding, not overriding.
+
+*****************************************************************************************************************************************************
+
+Q. Static binding and dynamic binding in Java ? Give some practical examples.
+Ans:
+✅1. Static Binding (Early Binding)
+Definition: Method call is resolved at compile time.
+When it happens:
+Static methods
+Private methods
+Final methods
+Key Point: The compiler decides which method to call based on reference type, not object type.
+
+Example:
+class Parent {
+    static void greet() {
+        System.out.println("Hello from Parent");
+    }
+}
+
+class Child extends Parent {
+    static void greet() {
+        System.out.println("Hello from Child");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Parent p = new Child();
+        p.greet(); // Calls Parent's greet due to static binding
+    }
+}
+
+✅2. Dynamic Binding (Late Binding)
+Definition: Method call is resolved at runtime based on the actual object type.
+When it happens:
+Overridden instance methods (non-static, non-final, non-private)
+Key Point: JVM decides which method to execute at runtime.
+
+Example:
+class Parent {
+    void greet() {
+        System.out.println("Hello from Parent");
+    }
+}
+
+class Child extends Parent {
+    void greet() {
+        System.out.println("Hello from Child");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Parent p = new Child();
+        p.greet(); // Calls Child's greet due to dynamic binding
+    }
+}
 
 *****************************************************************************************************************************************************

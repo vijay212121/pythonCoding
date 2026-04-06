@@ -658,5 +658,28 @@ Q.common Exceptions in selenium?
 		
 *******************************************************************************************************************************************************
 
+Q. What are Desired Capabilities?
+Ans:
+Desired capabilities are a set of key-value pairs used in Selenium to set up the environment and settings for a test session. They tell the framework
+which browser, platform, device to use.
+
+Example:
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+public class Test {
+    public static void main(String[] args) {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setBrowserName("chrome");
+        caps.setVersion("114");
+        caps.setCapability("platform", "WINDOWS");
+
+        WebDriver driver = new ChromeDriver(caps);
+        driver.get("https://www.example.com");
+    }
+}
+
+*******************************************************************************************************************************************************
 
 				
