@@ -745,3 +745,11 @@ public class Test {
 }
 
 *****************************************************************************************************************************************************
+
+Q. what are wrapper classes in java?
+Ans:
+Wrapper classes are object representations of primitive data types used to enable object-based operations in Java.
+-> Wrapper classes convert primitives into objects
+-> Required for collections, generics, and utility methods
+
+*****************************************************************************************************************************************************
